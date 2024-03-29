@@ -1,82 +1,61 @@
-import goblin from "../img/goblin.png";
+import { Character } from "../js/character";
+import { Board } from "../js/board";
 
 class Game {
   constructor() {
-    this.boardSize = 4;
-    this.character = 0;
-    this.board = 0;
+    this.board = new Board();
+    this.character = new Character();
+    this.element = this.character.createCharacter();
 
     // Добавление очков
-    this.count = 0;
     this.score = 0;
+    this.count = 0;
     this.missedGoblins = 0;
     this.maxMissedGoblins = 5;
     this.init();
   }
 
   init() {
-    this.createBoard();
-    this.createCharacter();
+    this.clickCharacter();
     setInterval(() => this.moveCharacter(), 1000);
   }
 
-  createBoard() {
-    this.board = document.querySelector('.game-board');
+  // Добавляем клик
+  clickCharacter() {
+    this.element.onclick = () => this.handleCharacterClick();
   }
 
-  // Создание гоблина
-  createCharacter() {
-    this.character = document.createElement('img');
-    this.character.src = goblin;
-    this.character.className = 'character';
-    this.board.appendChild(this.character);
-
-    // Добавляем клик
-    this.character.onclick = () => this.handleCharacterClick();
-    
-  }
-
-  // Перемещение внутри 
+  // Перемещение внутри
   moveCharacter() {
-    const row = Math.floor(Math.random() * this.boardSize) + 1;
-    const column = Math.floor(Math.random() * this.boardSize) + 1;
-    this.character.style.gridColumn = column;
-    this.character.style.gridRow = row;
+    const { row, column } = this.board.createBoard();
+    this.element.style.gridColumn = column;
+    this.element.style.gridRow = row;
     this.count++;
-    
-    
-    if (this.character.hidden == false && this.count > 1) {
+
+    if (!this.element.hidden && this.count > 1) {
       this.missedGoblins++;
-      console.log(this.missedGoblins)
-        
+      console.log(this.missedGoblins);
       if (this.missedGoblins >= this.maxMissedGoblins) {
+        console.log("Game over");
         this.endGame();
-        console.log('Game over');
       }
     } else {
-      this.character.hidden = false;
+      this.element.hidden = false;
     }
-    
   }
 
   handleCharacterClick() {
-    this.character.hidden = true;   
+    this.element.hidden = true;
     this.score++;
-    console.log(this.score)
-
-
+    console.log(this.score);
   }
 
-  updateScore() {
-    print(this.score);
-  }
-
+  // Конец игры
   endGame() {
-    alert(`Your max point: ${this.score}`)
-    this.missedGoblins = 0;
-    this.score = 0;
+    alert(`Your max point: ${this.score}`);
     this.count = 0;
-    
+    this.missedGoblins = 0;
+    this.count = 0;
   }
 }
 
