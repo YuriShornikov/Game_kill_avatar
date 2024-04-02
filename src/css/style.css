@@ -4,7 +4,12 @@
     grid-template-rows: repeat(4, 2fr);
     width: 400px;
     height: 400px;
-    border: 2px solid black;
+    border: 1px solid black;
+}
+
+.game-board-cell {
+    outline:1px solid black;
+    outline-offset:-1px;
 }
 
 .game-board .character {

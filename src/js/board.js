@@ -12,9 +12,11 @@ export class Board {
 
   createBoard() {
     this.board = document.querySelector(".game-board");
-    const column = Math.floor(Math.random() * this.boardSize) + 1;
-    const row = Math.floor(Math.random() * this.boardSize) + 1;
-
-    return { row, column };
+    
+    for (let i = 0; i < this.boardSize * this.boardSize; i += 1) {
+      const cellEl = document.createElement("div");
+      cellEl.classList.add("game-board-cell");
+      this.board.appendChild(cellEl);
+    }
   }
 }

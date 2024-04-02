@@ -17,6 +17,7 @@ class Game {
 
   init() {
     this.clickCharacter();
+    
     setInterval(() => this.moveCharacter(), 1000);
   }
 
@@ -26,8 +27,9 @@ class Game {
   }
 
   // Перемещение внутри
-  moveCharacter() {
-    const { row, column } = this.board.createBoard();
+  moveCharacter() {    
+    const column = Math.floor(Math.random() * this.board.boardSize) + 1;
+    const row = Math.floor(Math.random() * this.board.boardSize) + 1;
     this.element.style.gridColumn = column;
     this.element.style.gridRow = row;
     this.count++;
